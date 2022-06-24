@@ -3,7 +3,7 @@
 A new Flutter project.
 
 # Authors
-Jonathan Contreras, Andres Segura, Jose Vega
+Jonatan Contreras, Andres Segura, Jose Vega
 
 ## Getting Started
 
