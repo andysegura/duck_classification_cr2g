@@ -8,7 +8,7 @@ Jonatan Contreras, Andres Segura, Jose Vega
 # Advisor
 Dr. Martine Ceberio
 
-#University
+# University
 University of Texas at El Paso
 
 ## Getting Started
