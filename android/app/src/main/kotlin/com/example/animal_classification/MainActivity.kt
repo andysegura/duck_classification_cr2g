@@ -1,4 +1,4 @@
-package com.example.animal_classification
+package com.cr26.duck_classification
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.animal_classification">
+    package="com.cr26.duck_classification">
    <application
         android:label="Animal Classification"
         android:icon="@mipmap/launcher_icon">

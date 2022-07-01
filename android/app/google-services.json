@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "626347518398",
+    "project_id": "duck-project-c2881",
+    "storage_bucket": "duck-project-c2881.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626347518398:android:ba4ab0f55dd38c7ba031ef",
+        "android_client_info": {
+          "package_name": "com.cr26.duck_classification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626347518398-d23mhhp8ckrj6pc9i3ge8p4e2o8puj1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADoDSD6wibGvI9zU0wkz-qZc453vWbwU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626347518398-d23mhhp8ckrj6pc9i3ge8p4e2o8puj1v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "626347518398-qg9l9jf3uhvddhntoc4a864elntj4ktl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.animalClassification"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626347518398:android:b64e4faa3ed3f0f7a031ef",
+        "android_client_info": {
+          "package_name": "com.example.animal_classification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626347518398-d23mhhp8ckrj6pc9i3ge8p4e2o8puj1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADoDSD6wibGvI9zU0wkz-qZc453vWbwU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626347518398-d23mhhp8ckrj6pc9i3ge8p4e2o8puj1v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "626347518398-qg9l9jf3uhvddhntoc4a864elntj4ktl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.animalClassification"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
