@@ -12,7 +12,10 @@ class _RegisterState extends State<Register> {
   final _emailController = TextEditingController();
   final _pwController = TextEditingController();
 
-  Future sendRequest() async {
+  Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _pwController.text.trim());
   }
 
   @override
@@ -21,6 +24,7 @@ class _RegisterState extends State<Register> {
     _pwController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,94 +32,89 @@ class _RegisterState extends State<Register> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children : [
-                  Icon(Icons.login,
-                    size: 90,),
-                  SizedBox(height: 20),
-                  Text(
-                    "Register",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(
+                Icons.login,
+                size: 90,
+              ),
+              SizedBox(height: 20),
+              Text(
+                "Register",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              ),
+              SizedBox(height: 15),
+              Text(
+                "You will receive an email when your account has been confirmed",
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  SizedBox(height: 15),
-                  Text(
-                    "You will receive an email when your account has been confirmed",
-                    style: TextStyle(
-                        fontSize: 16),
-                  ),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'email',
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: TextField(
-                          controller: _emailController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'email',
-                          ),
-                        ),
-                      ),
-
                     ),
                   ),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 18.0),
+                    child: TextField(
+                      controller: _pwController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'password',
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: TextField(
-                          controller: _pwController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'password',
-                          ),
-                        ),
-                      ),
-
                     ),
                   ),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: GestureDetector(
-                      onTap: sendRequest,
-                      child: Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            color: Colors.lightBlue,
-                            borderRadius: BorderRadius.circular(15)
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Submit Request",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: GestureDetector(
+                  onTap: signUp,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        color: Colors.lightBlue,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Center(
+                      child: Text(
+                        "Submit Request",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                ]),
+                ),
+              ),
+              SizedBox(height: 10),
+            ]),
           ),
         ),
       ),
