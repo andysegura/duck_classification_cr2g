@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:animal_classification/login_page.dart';
+import 'package:animal_classification/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
@@ -62,13 +63,16 @@ class _HomeState extends State<Home> {
       imageStd: 127.5,
     );
 
-    setState(() {
-      if (output != null) {
-        _output = output;
-      }
+    if (output != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  ResultsScreen(_image,
+                      output[0]['label'],
+                      "${(output[0]['confidence'] * 100).toStringAsFixed(3)}")));
+    }
 
-      _loading = false;
-    });
   }
 
   loadModel() async {

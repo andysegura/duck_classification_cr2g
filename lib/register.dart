@@ -16,6 +16,7 @@ class _RegisterState extends State<Register> {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _pwController.text.trim());
+    Navigator.pop(context);
   }
 
   @override

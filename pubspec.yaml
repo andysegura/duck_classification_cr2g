@@ -31,6 +31,8 @@ dependencies:
   # For app logo and Splash Screen
   flutter_launcher_icons: ^0.9.1
   flutter_native_splash: ^1.2.1
+  cloud_firestore: ^3.2.1
+  firebase_storage: ^10.3.1
 
 flutter_native_splash:
   color: "#E0F3FD"
