@@ -1,101 +1,93 @@
-// import 'package:animal_classification/Model/Classification.dart';
-// import 'package:animal_classification/Model/ClassificationDBWorker.dart';
-// import 'package:animal_classification/Model/Utility.dart';
-// //import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_slidable/flutter_slidable.dart';
-// import 'dart:io';
-// import 'details_screen.dart';
-//
-//
-// ///This class is used to pull previous classifications from a local database and present them to the user.
-// class PreviousClassifications extends StatefulWidget {
-//   @override
-//   PreviousClassificationsState createState() => PreviousClassificationsState();
-// }
-//
-// class PreviousClassificationsState extends State<PreviousClassifications> {
-//   late Future<File> imageFile;
-//   late Image image;
-//   ClassificationDBWorker dbHelper = ClassificationDBWorker();
-//   late List<Classification> images;
-//
-//   @override
-//   initState() {
-//     super.initState();
-//     images = [];
-//     dbHelper = ClassificationDBWorker();
-//     refreshImages();
-//     }
-//
-//   refreshImages() {
-//     dbHelper.getClassifications().then((imgs) {
-//       setState(() {
-//         images.clear();
-//         images.addAll(imgs);
-//       });
-//     });
-//   }
-//
-//   gridView() {
-//     return Padding(
-//         padding: EdgeInsets.all(5.0),
-//         child: GridView.count(
-//           crossAxisCount: 3,
-//           childAspectRatio: 1.0,
-//           mainAxisSpacing: 4.0,
-//           crossAxisSpacing: 4.0,
-//           children: images.map((photo) {
-//             return GestureDetector(
-//               child: Slidable(
-//                     actionPane: SlidableDrawerActionPane(),
-//                     actionExtentRatio : .25,
-//                     child: Utility.imageFromBase64String(photo.picture_name),
-//                     secondaryActions : [
-//                       IconSlideAction(
-//                           caption : "Delete",
-//                           color : Colors.red,
-//                           icon : Icons.delete,
-//                           onTap : () {
-//                             dbHelper.deleteClassification(photo);
-//                             refreshImages();
-//                           }
-//                       )
-//                     ]),
-//               onTap: () {
-//                         Navigator.push(context, MaterialPageRoute(builder: (_) {
-//                         return DetailScreen(photo);}));
-//                         },
-//               );}).toList(),
-//         )
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//             backgroundColor: Colors.black12,
-//             title: Text(
-//               'Previous Classifications',
-//               style: TextStyle(
-//                   color: Colors.white,
-//                   fontSize: 20,
-//                   letterSpacing: 0.8),
-//             )
-//         ),
-//         body: gridView()
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class PreviousClassifications extends StatelessWidget {
-  // This widget is the root of your application.
+
+///The results screen calls the machine learning model, classifies, and displays the results.
+
+class PreviousClassifications extends StatefulWidget {
+  PreviousClassifications();
+
+  @override
+  PreviousClassificationsState createState() => PreviousClassificationsState();
+}
+
+class PreviousClassificationsState extends State<PreviousClassifications> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
+
+  // List<Map<String, String>> docIDs = [];
+  var docIDs = <Map>[];
+
+  void initState() {
+    super.initState();
+  }
+
+  Future getInfoFromDB() async {
+    final User? user = auth.currentUser;
+    final uid = user?.uid;
+    await predictionsDB
+        .where('uid', isEqualTo: uid)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["email"]);
+        print(doc['image']);
+        print(doc['mlPredicted']);
+        print(doc['confidence']);
+        print(doc['userPredicted']);
+;
+        docIDs.add(
+            {
+              'image': doc['image'],
+              'mlPredicted' : doc['mlPredicted'],
+              'confidence' : doc['confidence'],
+              'userPredicted': doc['userPredicted'],
+              'email': doc['email'],
+              'uid': doc['uid'],
+             // 'date/time': doc['date/time']
+            }
+        );
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text('Test');
+    //getInfoFromDB();
+    return Scaffold(
+        appBar: AppBar(
+            backgroundColor: Colors.black12,
+            title: Text(
+              'Machine Learning Results',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  letterSpacing: 0.8),
+            )
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: FutureBuilder(
+                  future: getInfoFromDB(),
+                  builder: (context, snapshot) {
+                    return ListView.builder(
+                        itemCount: docIDs.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(docIDs[index]['confidence']),
+                          );
+                        });
+                  }
+                )
+              ),
+            ]
+          )
+        )
+    );
   }
 }
+
