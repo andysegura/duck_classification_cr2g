@@ -18,7 +18,6 @@ class ResultsScreen extends StatefulWidget {
   String duckName;
   String confidence;
 
-
   ResultsScreen(this._image, this.duckName, this.confidence);
 
   @override
@@ -57,19 +56,21 @@ class ResultsScreenState extends State<ResultsScreen> {
 
 
 
-  Future sendRequest() async {
+  Future sendClassification() async {
     final User? user = auth.currentUser;
     final uid = user?.uid;
     final email = user?.email;
+    final time = DateTime.now();
 
     predictionsDB.add({
       'mlPredicted': duckName,
       'confidence': confidence,
       'userPredicted': userPredicted,
       'image': base64Encode(_image.readAsBytesSync()),
-      'date/time': DateTime.now(),
+      'date/time': '${time.month }/${time.day}/${time.year} ${time.hour}:${time.minute}',
       'uid' : uid,
       'email': email,
+      'showOnFeed': true,
     }
     );
 
@@ -164,7 +165,7 @@ class ResultsScreenState extends State<ResultsScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: GestureDetector(
-                          onTap: sendRequest,
+                          onTap: sendClassification,
                           child: Container(
                             padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+import 'package:animal_classification/previous_result.dart';
 
 
 ///The results screen calls the machine learning model, classifies, and displays the results.
@@ -16,13 +17,8 @@ class PreviousClassifications extends StatefulWidget {
 class PreviousClassificationsState extends State<PreviousClassifications> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
-
-  // List<Map<String, String>> docIDs = [];
   var docIDs = <Map>[];
-
-  void initState() {
-    super.initState();
-  }
+  var img;
 
   Future getInfoFromDB() async {
     final User? user = auth.currentUser;
@@ -32,23 +28,30 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        print(doc["email"]);
-        print(doc['image']);
-        print(doc['mlPredicted']);
-        print(doc['confidence']);
-        print(doc['userPredicted']);
-;
-        docIDs.add(
-            {
-              'image': doc['image'],
-              'mlPredicted' : doc['mlPredicted'],
-              'confidence' : doc['confidence'],
-              'userPredicted': doc['userPredicted'],
-              'email': doc['email'],
-              'uid': doc['uid'],
-             // 'date/time': doc['date/time']
-            }
-        );
+        if (doc['showOnFeed']) {
+          print(doc["email"]);
+          String mlp;
+
+          if (doc['mlPredicted'] == '0') {
+            mlp = 'Diazi (Mexican Duck)';
+          }
+          else {
+            mlp = 'Platyrhynchos (Mallard Duck)';
+          }
+          docIDs.add(
+              {
+                'image': doc['image'],
+                'mlPredicted': mlp,
+                'confidence': doc['confidence'],
+                'userPredicted': doc['userPredicted'],
+                'email': doc['email'],
+                'uid': doc['uid'],
+                'documentID': doc.id
+                //'date/time': doc['date/time']
+              }
+          );
+        }
+
       });
     });
   }
@@ -77,8 +80,42 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
                     return ListView.builder(
                         itemCount: docIDs.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(docIDs[index]['confidence']),
+                          return Container(
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                      PreviousResult(
+                                          docIDs[index]['image'],
+                                          docIDs[index]['mlPredicted'],
+                                          docIDs[index]['confidence'],
+                                          docIDs[index]['userPredicted'],
+                                          docIDs[index]['uid'],
+                                          docIDs[index]['documentID'],
+                                      )
+                                    )
+                                  );
+                                },
+                                  child: Image(
+                                      image: Image.memory(base64Decode(docIDs[index]['image'])).image),
+                                ),
+                                SizedBox(
+                                    height: 10),
+                                Text(
+                                    "${docIDs[index]['mlPredicted']}  "
+                                    "${docIDs[index]['confidence']}",
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold
+                                  )
+                                ),
+                                SizedBox(height: 20),
+                              ],
+                            )
                           );
                         });
                   }
