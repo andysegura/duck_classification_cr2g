@@ -4,11 +4,11 @@ import 'package:animal_classification/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:animal_classification/Model/Classification.dart';
-// import 'package:animal_classification/Model/ClassificationDBWorker.dart';
-import 'package:animal_classification/Model/Utility.dart';
 import 'package:animal_classification/previous_classifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+/// home page allows user to select picture from camera or gallery
+/// as well as view previously saved classifications
 
 class Home extends StatefulWidget {
   @override
@@ -107,22 +107,13 @@ class _HomeState extends State<Home> {
     _image2 = image;
   }
 
-  saveClassification() {
-    Utility.saveImageToPreferences(
-        Utility.base64String(_image.readAsBytesSync()));
 
-    // ClassificationDBWorker dbHelper = ClassificationDBWorker();
-    // String imgString = Utility.base64String(_image.readAsBytesSync());
-    // int picClass = int.parse(_output[0]['label']);
-    // Classification classification = Classification(0, imgString, picClass);
-    // dbHelper.save(classification);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
           'Show me your duck',
@@ -141,13 +132,13 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.green,
       ),
       body: Container(
-        color: Color.fromRGBO(68, 190, 255, 0.8),
+        color: Colors.black26,
         padding: EdgeInsets.symmetric(horizontal: 35, vertical: 50),
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(30),
           decoration: BoxDecoration(
-            color: Colors.indigo,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
@@ -189,7 +180,7 @@ class _HomeState extends State<Home> {
                                   : Container(),
                               _output != null
                                   ? GestureDetector(
-                                      onTap: saveClassification,
+                                      onTap: null,
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width -

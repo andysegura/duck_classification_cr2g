@@ -5,7 +5,8 @@ import 'dart:convert';
 import 'package:animal_classification/previous_result.dart';
 
 
-///The results screen calls the machine learning model, classifies, and displays the results.
+///Previous classifications lists all previous classifications
+///the user chose to save.
 
 class PreviousClassifications extends StatefulWidget {
   PreviousClassifications();
@@ -29,9 +30,9 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         if (doc['showOnFeed']) {
-          print(doc["email"]);
+          print(doc['email']);
+          print(doc['date']);
           String mlp;
-
           if (doc['mlPredicted'] == '0') {
             mlp = 'Diazi (Mexican Duck)';
           }
@@ -46,8 +47,8 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
                 'userPredicted': doc['userPredicted'],
                 'email': doc['email'],
                 'uid': doc['uid'],
-                'documentID': doc.id
-                //'date/time': doc['date/time']
+                'documentID': doc.id,
+                'date': doc['date']
               }
           );
         }
@@ -96,24 +97,32 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
                                           docIDs[index]['userPredicted'],
                                           docIDs[index]['uid'],
                                           docIDs[index]['documentID'],
+                                          docIDs[index]['date']
                                       )
                                     )
                                   );
                                 },
-                                  child: Image(
-                                      image: Image.memory(base64Decode(docIDs[index]['image'])).image),
+                                  child: Expanded(
+                                    child: Image(
+                                        image: Image.memory(base64Decode(docIDs[index]['image'])).image),
+                                  ),
                                 ),
                                 SizedBox(
                                     height: 10),
                                 Text(
                                     "${docIDs[index]['mlPredicted']}  "
-                                    "${docIDs[index]['confidence']}",
+                                    "${docIDs[index]['confidence']}%",
                                   style: TextStyle(
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold
                                   )
                                 ),
-                                SizedBox(height: 20),
+                                Text(docIDs[index]['date'],
+                                  style: TextStyle(
+                                    fontSize: 20
+                                  )
+                                ),
+                                SizedBox(height: 35),
                               ],
                             )
                           );

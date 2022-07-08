@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'home.dart';
 
+/*
+This page checks if the user is logged in. If they are,
+then it redirects them to main.dart. If not, they get
+redirected to login_page.dart
+*/
+
 class LoginCheck extends StatelessWidget {
   const LoginCheck({Key? key}) : super(key : key);
 

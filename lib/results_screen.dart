@@ -11,7 +11,7 @@ import 'package:path/path.dart' as Path;
 
 
 
-///The results screen calls the machine learning model, classifies, and displays the results.
+///The result screen displays the ML results.
 
 class ResultsScreen extends StatefulWidget {
   File _image;
@@ -26,7 +26,7 @@ class ResultsScreen extends StatefulWidget {
 
 class ResultsScreenState extends State<ResultsScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
   File _image;
   String confidence;
@@ -37,8 +37,6 @@ class ResultsScreenState extends State<ResultsScreen> {
     '1': 'Platyrhynchos (Mallard Duck)'
   };
 
-  // late List<dynamic> _output; //List<dynamic> _output;
-  // final picker = ImagePicker();
   ResultsScreenState(this._image, this.duckName, this.confidence);
 
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
@@ -67,7 +65,7 @@ class ResultsScreenState extends State<ResultsScreen> {
       'confidence': confidence,
       'userPredicted': userPredicted,
       'image': base64Encode(_image.readAsBytesSync()),
-      'date/time': '${time.month }/${time.day}/${time.year} ${time.hour}:${time.minute}',
+      'date': '${time.month.toString()}/${time.day.toString()}/${time.year.toString()} ${time.hour.toString()}:${time.minute.toString()}',
       'uid' : uid,
       'email': email,
       'showOnFeed': true,
@@ -103,7 +101,7 @@ class ResultsScreenState extends State<ResultsScreen> {
     }
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.black12,
+            backgroundColor: Colors.black,
             title: Text(
               'Machine Learning Results',
               style: TextStyle(
@@ -138,7 +136,7 @@ class ResultsScreenState extends State<ResultsScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Image.file(_image),
+                      Expanded(child: Image.file(_image)),
                       SizedBox(height: 20),
                       Text(
                           'Your Prediction:',
