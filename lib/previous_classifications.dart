@@ -21,6 +21,45 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
   var docIDs = <Map>[];
   var img;
 
+    Widget buildImageCard(int index) =>
+      Card(
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0),
+        ),
+        child: Container(
+          margin: EdgeInsets.all(8),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(0),
+              child: GestureDetector(onTap: () async {
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                      PreviousResult(
+                                          docIDs[index]['image'],
+                                          docIDs[index]['mlPredicted'],
+                                          docIDs[index]['confidence'],
+                                          docIDs[index]['userPredicted'],
+                                          docIDs[index]['uid'],
+                                          docIDs[index]['documentID'],
+                                          docIDs[index]['date']
+                                      )
+                                    )
+                                  );
+                                },
+                child: Image(
+                    image: Image
+                        .memory(base64Decode(docIDs[index]['image']))
+                        .image,
+                    fit: BoxFit.cover
+                ),
+              )
+          ),
+        ),
+
+      );
+
   Future getInfoFromDB() async {
     final User? user = auth.currentUser;
     final uid = user?.uid;
@@ -72,68 +111,20 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
             )
         ),
         body: Center(
-          child: Column(
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  future: getInfoFromDB(),
-                  builder: (context, snapshot) {
-                    return ListView.builder(
-                        itemCount: docIDs.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            child: Column(
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                      PreviousResult(
-                                          docIDs[index]['image'],
-                                          docIDs[index]['mlPredicted'],
-                                          docIDs[index]['confidence'],
-                                          docIDs[index]['userPredicted'],
-                                          docIDs[index]['uid'],
-                                          docIDs[index]['documentID'],
-                                          docIDs[index]['date']
-                                      )
-                                    )
-                                  );
-                                },
-                                  child: Expanded(
-                                    child: Image(
-                                        image: Image.memory(base64Decode(docIDs[index]['image'])).image),
+            child: FutureBuilder(
+                future: getInfoFromDB(),
+                builder: (context, snapshot) {
+                  return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 5,
+                                    crossAxisSpacing: 5,
                                   ),
-                                ),
-                                SizedBox(
-                                    height: 10),
-                                Text(
-                                    "${docIDs[index]['mlPredicted']}  "
-                                    "${docIDs[index]['confidence']}%",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold
-                                  )
-                                ),
-                                Text(docIDs[index]['date'],
-                                  style: TextStyle(
-                                    fontSize: 20
-                                  )
-                                ),
-                                SizedBox(height: 35),
-                              ],
-                            )
-                          );
-                        });
-                  }
-                )
-              ),
-            ]
-          )
-        )
+                      itemCount: docIDs.length,
+                      itemBuilder: (context, index) => buildImageCard(index));
+                 }
+             )
+         )
     );
   }
 }
-

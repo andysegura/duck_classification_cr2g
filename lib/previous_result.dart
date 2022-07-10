@@ -1,11 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
-import 'package:path/path.dart' as Path;
 
 
 
@@ -22,7 +18,6 @@ class PreviousResult extends StatefulWidget {
   String uid;
   String documentID;
   String date;
-
 
   PreviousResult(this._image, this.mlPredicted, this.confidence,
       this.userPredicted, this.uid, this.documentID, this.date);
@@ -71,36 +66,6 @@ class PreviousResultState extends State<PreviousResult> {
   }
 
 
-  Future sendRequest() async {
-    // final User? user = auth.currentUser;
-    // final uid = user?.uid;
-    // final email = user?.email;
-    // final time = DateTime.now();
-    //
-    // predictionsDB.add({
-    //   'mlPredicted': duckName,
-    //   'confidence': confidence,
-    //   'userPredicted': userPredicted,
-    //   'image': base64Encode(_image.readAsBytesSync()),
-    //   'date/time': '${time.month }/${time.day}/${time.year} ${time.hour}:${time.minute}',
-    //   'uid' : uid,
-    //   'email': email,
-    // }
-    //);
-
-    // final FirebaseStorage _storage =
-    //     FirebaseStorage.instance;
-    // final destination = 'duck_images/$_image.path';
-    // final fileName = _image.path;
-    // File file = File(fileName);
-    // try {
-    //   await _storage.ref(destination).putFile(file);
-    // } on FirebaseException catch(e) {
-    //   print(e);
-    // }
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -134,7 +99,7 @@ class PreviousResultState extends State<PreviousResult> {
                       Text(
                         mlPredicted,
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
@@ -155,7 +120,8 @@ class PreviousResultState extends State<PreviousResult> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Image(image: Image.memory(base64Decode(_image)).image),
+                      Expanded(
+                          child: Image(image: Image.memory(base64Decode(_image)).image)),
                       SizedBox(height: 20),
                       Text(
                           'Change Prediction?',

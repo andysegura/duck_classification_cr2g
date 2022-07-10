@@ -151,8 +151,6 @@ class ResultsScreenState extends State<ResultsScreen> {
                           border: Border.all(color: Colors.black, width: 2),
                           color: Colors.white,
                         ),
-
-
                         child: DropdownButton<String>(
                             value: userPredicted,
                             items: predictionOptions.map(buildMenuItem).toList(),

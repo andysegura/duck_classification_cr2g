@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register.dart';
+import 'login_check.dart';
+import 'package:email_validator/email_validator.dart';
 
 //login page
 
@@ -15,11 +17,48 @@ class _LoginPageState extends State<LoginPage> {
   // used to read text in input fields
   final _emailController = TextEditingController();
   final _pwController = TextEditingController();
+  String _emailErrorMessage = '';
+  String _pwErrorMessage = '';
+
+  void validateEmail(String val) {
+    if(val.isEmpty){
+      setState(() {
+        _emailErrorMessage = "Email can not be empty";
+      });
+    }else if(!EmailValidator.validate(val, true)){
+      setState(() {
+        _emailErrorMessage = "Invalid Email Address";
+      });
+    }else{
+      setState(() {
+        _emailErrorMessage = "";
+      });
+    }
+  }
+
+  void validatePassword(String val) {
+    if(val.isEmpty){
+      setState(() {
+        _pwErrorMessage = "Password can not be empty";
+      });
+    }else if(val.length < 6){
+      setState(() {
+        _pwErrorMessage = "Password must be more than 6 characterss";
+      });
+    }else{
+      setState(() {
+        _pwErrorMessage = "";
+      });
+    }
+  }
 
   Future signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _pwController.text.trim());
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => LoginCheck()));
+
   }
 
   @override
@@ -64,6 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: TextField(
+                      onChanged: (val) {
+                        validateEmail(val);
+                      },
+                      keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -73,7 +116,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+             SizedBox(height: 5),
+              Text(_emailErrorMessage,
+              style: TextStyle(
+                color: Colors.red
+              )),
+              SizedBox(
+                  height: 5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Container(
@@ -85,6 +134,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: TextField(
+                      onChanged: (val) {
+                        validatePassword(val);
+                      },
                       controller: _pwController,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -95,7 +147,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(
+                height: 5,),
+              Text(
+                  _pwErrorMessage,
+                style: TextStyle(
+                    color: Colors.red),
+              ),
+              SizedBox(
+                  height: 5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: GestureDetector(

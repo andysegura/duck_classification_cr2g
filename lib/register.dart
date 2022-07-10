@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:animal_classification/terms.dart';
+import 'package:email_validator/email_validator.dart';
+
 
 /// allows user to request an account. user must agree to terms
 /// and conditions to request.
@@ -17,6 +19,8 @@ class _RegisterState extends State<Register> {
   final _pwController = TextEditingController();
   CollectionReference newUserRequests = FirebaseFirestore.instance.collection('newUserRequests');
   bool agreedToTerms = false;
+  String _emailErrorMessage = '';
+  String _pwErrorMessage = '';
 
   Future requestSignUp() async {
     newUserRequests.add({
@@ -24,6 +28,38 @@ class _RegisterState extends State<Register> {
       'password': _pwController
     });
     Navigator.pop(context);
+  }
+
+  void validateEmail(String val) {
+    if(val.isEmpty){
+      setState(() {
+        _emailErrorMessage = "Email can not be empty";
+      });
+    }else if(!EmailValidator.validate(val, true)){
+      setState(() {
+        _emailErrorMessage = "Invalid Email Address";
+      });
+    }else{
+      setState(() {
+        _emailErrorMessage = "";
+      });
+    }
+  }
+
+  void validatePassword(String val) {
+    if(val.isEmpty){
+      setState(() {
+        _pwErrorMessage = "Password can not be empty";
+      });
+    }else if(val.length < 6){
+      setState(() {
+        _pwErrorMessage = "Password must be more than 6 characterss";
+      });
+    }else{
+      setState(() {
+        _pwErrorMessage = "";
+      });
+    }
   }
 
   @override
@@ -74,6 +110,9 @@ class _RegisterState extends State<Register> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: TextField(
+                      onChanged: (val) {
+                        validateEmail(val);
+                      },
                       controller: _emailController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -83,7 +122,14 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
+              Text(_emailErrorMessage,
+                  style: TextStyle(
+                      color: Colors.red
+                  )),
+              SizedBox(
+                  height: 15
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Container(
@@ -95,6 +141,9 @@ class _RegisterState extends State<Register> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0),
                     child: TextField(
+                      onChanged: (val) {
+                        validatePassword(val);
+                      },
                       controller: _pwController,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -105,7 +154,13 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 5),
+              Text(_pwErrorMessage,
+                  style: TextStyle(
+                      color: Colors.red
+                  )),
+              SizedBox(
+                  height: 15),
               GestureDetector(
                 onTap: () async {
                   Navigator.push(context,
