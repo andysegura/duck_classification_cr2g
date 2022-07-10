@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:animal_classification/previous_result.dart';
 
-
 ///Previous classifications lists all previous classifications
 ///the user chose to save.
 
@@ -101,7 +100,7 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
     //getInfoFromDB();
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.black12,
+            backgroundColor: Colors.black,
             title: Text(
               'Machine Learning Results',
               style: TextStyle(

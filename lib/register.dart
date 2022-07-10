@@ -22,6 +22,8 @@ class _RegisterState extends State<Register> {
   String _emailErrorMessage = '';
   String _pwErrorMessage = '';
 
+  //sends username and password to firestore so we can authorize
+  //and approve.
   Future requestSignUp() async {
     newUserRequests.add({
       'email': _emailController,
@@ -30,6 +32,7 @@ class _RegisterState extends State<Register> {
     Navigator.pop(context);
   }
 
+  //makes sure inout is valid email
   void validateEmail(String val) {
     if(val.isEmpty){
       setState(() {
@@ -46,6 +49,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  //makes sure input is longer than 6 characters
   void validatePassword(String val) {
     if(val.isEmpty){
       setState(() {
@@ -62,6 +66,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  //disposes and closes app
   @override
   void dispose() {
     _emailController.dispose();

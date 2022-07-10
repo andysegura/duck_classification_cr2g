@@ -75,7 +75,7 @@ class PreviousResultState extends State<PreviousResult> {
       'Other'];
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.black12,
+            backgroundColor: Colors.black,
             title: Text(
               'Previous Result',
               style: TextStyle(

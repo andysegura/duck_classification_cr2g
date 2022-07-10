@@ -1,41 +1,28 @@
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_core/firebase_core.dart';
-import 'package:path/path.dart' as Path;
-
-
 
 ///The result screen displays the ML results.
+///tflite model is ran in home.dart and sent to this page
 
 class ResultsScreen extends StatefulWidget {
   File _image;
   String duckName;
   String confidence;
-
   ResultsScreen(this._image, this.duckName, this.confidence);
-
   @override
   ResultsScreenState createState() => ResultsScreenState(_image, duckName, confidence);
 }
 
 class ResultsScreenState extends State<ResultsScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  //FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
   File _image;
   String confidence;
   String? userPredicted;
   var duckName;
-  final duckNames = {
-    '0': 'Diazi (Mexican Duck)',
-    '1': 'Platyrhynchos (Mallard Duck)'
-  };
 
   ResultsScreenState(this._image, this.duckName, this.confidence);
 
@@ -53,7 +40,7 @@ class ResultsScreenState extends State<ResultsScreen> {
   );
 
 
-
+  //sends result to firestore server
   Future sendClassification() async {
     final User? user = auth.currentUser;
     final uid = user?.uid;
@@ -71,23 +58,11 @@ class ResultsScreenState extends State<ResultsScreen> {
       'showOnFeed': true,
     }
     );
-
-    // final FirebaseStorage _storage =
-    //     FirebaseStorage.instance;
-    // final destination = 'duck_images/$_image.path';
-    // final fileName = _image.path;
-    // File file = File(fileName);
-    // try {
-    //   await _storage.ref(destination).putFile(file);
-    // } on FirebaseException catch(e) {
-    //   print(e);
-    // }
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-
     final predictionOptions = ['Unknown',
       'Diazi (Mexican Duck)',
       'Platyrhynchos (Mallard Duck)',
@@ -121,23 +96,25 @@ class ResultsScreenState extends State<ResultsScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
-                    children: [Text(duck,
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
+                    children:
+                      [Text(duck,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
                       SizedBox(height: 10),
                       Text(
                         confidence + "% confident",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 10),
                       Expanded(child: Image.file(_image)),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       Text(
                           'Your Prediction:',
                           style: TextStyle(
@@ -170,7 +147,30 @@ class ResultsScreenState extends State<ResultsScreen> {
                             ),
                             child: Center(
                               child: Text(
-                                "Save Classification",
+                                "Save Result",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: GestureDetector(
+                          onTap: () {Navigator.pop(context);},
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Colors.lightBlue,
+                                borderRadius: BorderRadius.circular(15)
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Discard Result",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,

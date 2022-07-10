@@ -17,9 +17,11 @@ class _LoginPageState extends State<LoginPage> {
   // used to read text in input fields
   final _emailController = TextEditingController();
   final _pwController = TextEditingController();
+  //error messages displayed when text isn't correct
   String _emailErrorMessage = '';
   String _pwErrorMessage = '';
 
+  //makes sure input is a valid email
   void validateEmail(String val) {
     if(val.isEmpty){
       setState(() {
@@ -35,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
-
+  //makes sure password is over 6 characters
   void validatePassword(String val) {
     if(val.isEmpty){
       setState(() {
@@ -52,6 +54,9 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  //Attempts to sign in user to firebase, reroutes to Login Check
+  // to see if login attempt was successful
+
   Future signIn() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
@@ -61,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
 
   }
 
+  // disposes and closes app, automatically called
   @override
   void dispose() {
     _emailController.dispose();
