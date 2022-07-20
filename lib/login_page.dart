@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 20),
               Text(
-                "CR2G DUCK CLASSIFICATION",
+                "birdbrAIn-CR2G",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
               ),
               SizedBox(height: 15),

@@ -65,10 +65,8 @@ class PreviousResultState extends State<PreviousResult> {
     Navigator.pop(context);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     final predictionOptions = ['Unknown',
       'Diazi (Mexican Duck)',
       'Platyrhynchos (Mallard Duck)',

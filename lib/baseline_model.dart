@@ -6,20 +6,18 @@ import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:animal_classification/previous_classifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:animal_classification/baseline_model.dart';
-import 'package:animal_classification/BodyParts/body_start.dart';
 
 /// home page allows user to select picture from camera or gallery
 /// home.dart then runs the image through the tflite
 /// model and sends data to results_screen.dart.
 /// User can also choose to view previous ML results
 
-class Home extends StatefulWidget {
+class BaselineModel extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _BaselineModelState createState() => _BaselineModelState();
 }
 
-class _HomeState extends State<Home> {
+class _BaselineModelState extends State<BaselineModel> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   late File _image;
   final picker = ImagePicker(); //allows us to pick image from gallery or camera
@@ -103,7 +101,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          'BirdbrAIn',
+          'Baseline',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
@@ -111,19 +109,17 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended( //signout button
-        label: Text(
-            "sign out",
-            style: TextStyle(
-            fontSize: 10,
-              )
-            ),
-        onPressed: () {
-          signOut();
-        },
-        icon: Icon(Icons.logout),
-        backgroundColor: Colors.green,
-      ),
+      // floatingActionButton: FloatingActionButton.extended( //signout button
+      //   label: Text(
+      //       "sign out",
+      //       style: TextStyle(
+      //         fontSize: 10,
+      //       )
+      //   ),
+      //   onPressed: signOut,
+      //   icon: Icon(Icons.logout),
+      //   backgroundColor: Colors.green,
+      // ),
       body: Container(
         color: Colors.black.withOpacity(0.9),
         padding: EdgeInsets.symmetric(horizontal: 35, vertical: 50),
@@ -140,54 +136,37 @@ class _HomeState extends State<Home> {
               Container(
                 child: Column(
                   children: [
-                    Image.asset('assets/birdbrAIn logo.png',
-                    height: 200,
-                    width: 200,),
-                    SizedBox(height: 40),
                     GestureDetector( // take a photo button
-                      onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    BaselineModel())
-                        );
-                      },
+                      onTap: pickImage,
                       child: Container(
                         width: MediaQuery.of(context).size.width - 200,
                         alignment: Alignment.center,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                        EdgeInsets.symmetric(horizontal: 24, vertical: 17),
                         decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Text(
-                          'Baseline Model',
+                          'Take A Photo',
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
                     ),
                     SizedBox(height: 15),
                     GestureDetector( // pick from gallery button
-                      onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    BodyStart()));
-                      },
+                      onTap: pickGalleryImage,
                       child: Container(
                         width: MediaQuery.of(context).size.width - 200,
                         alignment: Alignment.center,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                        EdgeInsets.symmetric(horizontal: 24, vertical: 17),
                         decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Text(
-                          'Sequence',
+                          'Choose from Gallery',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -206,7 +185,7 @@ class _HomeState extends State<Home> {
                         width: MediaQuery.of(context).size.width - 200,
                         alignment: Alignment.center,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+                        EdgeInsets.symmetric(horizontal: 24, vertical: 17),
                         decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadius.circular(15),

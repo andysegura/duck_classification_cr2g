@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
-import 'home.dart';
+import 'package:animal_classification/home.dart';
 
 /*
 This page checks if the user is logged in. If they are,

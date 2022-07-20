@@ -17,7 +17,7 @@ class PreviousClassifications extends StatefulWidget {
 class PreviousClassificationsState extends State<PreviousClassifications> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
-  var docIDs = <Map>[];
+  var docIDs = <Map>[]; //stores all previous results that will be shown on feed
   var img;
 
     Widget buildImageCard(int index) =>
@@ -68,8 +68,6 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         if (doc['showOnFeed']) {
-          print(doc['email']);
-          print(doc['date']);
           String mlp;
           if (doc['mlPredicted'] == '0') {
             mlp = 'Diazi (Mexican Duck)';

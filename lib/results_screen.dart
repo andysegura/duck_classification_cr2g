@@ -26,6 +26,7 @@ class ResultsScreenState extends State<ResultsScreen> {
 
   ResultsScreenState(this._image, this.duckName, this.confidence);
 
+  // dropdown menu so user can choose their own prediction
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
       value: item,
       child: Text(

@@ -3,10 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:animal_classification/terms.dart';
 import 'package:email_validator/email_validator.dart';
 
-
 /// allows user to request an account. user must agree to terms
 /// and conditions to request.
-
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -159,7 +157,8 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(
+                  height: 5),
               Text(_pwErrorMessage,
                   style: TextStyle(
                       color: Colors.red
@@ -194,7 +193,8 @@ class _RegisterState extends State<Register> {
                   )
                 ],
               ),
-              SizedBox(height: 15),
+              SizedBox(
+                  height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: GestureDetector(
@@ -216,7 +216,8 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(
+                  height: 10),
             ]),
           ),
         ),
