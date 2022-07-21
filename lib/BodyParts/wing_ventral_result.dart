@@ -2,11 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:animal_classification/BodyParts/confirm_images.dart';
-
-/// home page allows user to select picture from camera or gallery
-/// home.dart then runs the image through the tflite
-/// model and sends data to results_screen.dart.
-/// User can also choose to view previous ML results
+import 'package:animal_classification/nav_bar.dart';
 
 class WingVentralResult extends StatefulWidget {
   File _image;
@@ -70,6 +66,7 @@ class _WingVentralResultState extends State<WingVentralResult> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,

@@ -2,11 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:animal_classification/BodyParts/head_side.dart';
-
-/// home page allows user to select picture from camera or gallery
-/// home.dart then runs the image through the tflite
-/// model and sends data to results_screen.dart.
-/// User can also choose to view previous ML results
+import 'package:animal_classification/nav_bar.dart';
 
 class HeadDorsalResult extends StatefulWidget {
   File _image;
@@ -54,33 +50,19 @@ class _HeadDorsalResultState extends State<HeadDorsalResult> {
       imageMean: 127.5,
       imageStd: 127.5,
     );
-    print(output.toString());
-
     if (output != null) {
       _results['head_dorsal'] = [
         _image,
         output[0]['label'],
         output[0]['confidence']
       ];
-
     }
-
-
-
-    // if (output != null) {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) =>
-    //               ResultsScreen(_image,
-    //                   output[0]['label'],
-    //                   "${(output[0]['confidence'] * 100).toStringAsFixed(3)}")));
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animal_classification/nav_bar.dart';
 
 
 
@@ -72,6 +73,7 @@ class PreviousResultState extends State<PreviousResult> {
       'Platyrhynchos (Mallard Duck)',
       'Other'];
     return Scaffold(
+        drawer: NavBar(),
         appBar: AppBar(
             backgroundColor: Colors.black,
             title: Text(
@@ -96,6 +98,7 @@ class PreviousResultState extends State<PreviousResult> {
                     children: [
                       Text(
                         mlPredicted,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
@@ -123,6 +126,7 @@ class PreviousResultState extends State<PreviousResult> {
                       SizedBox(height: 20),
                       Text(
                           'Change Prediction?',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -144,7 +148,8 @@ class PreviousResultState extends State<PreviousResult> {
                       ),
                       SizedBox(height: 25),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25.0),
                         child: GestureDetector(
                           onTap: changePrediction,
                           child: Container(
@@ -156,6 +161,7 @@ class PreviousResultState extends State<PreviousResult> {
                             child: Center(
                               child: Text(
                                 "Change user prediction",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,

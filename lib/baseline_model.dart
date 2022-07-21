@@ -6,6 +6,7 @@ import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:animal_classification/previous_classifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animal_classification/nav_bar.dart';
 
 /// home page allows user to select picture from camera or gallery
 /// home.dart then runs the image through the tflite
@@ -97,6 +98,7 @@ class _BaselineModelState extends State<BaselineModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,

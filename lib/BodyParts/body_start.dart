@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animal_classification/BodyParts/head_dorsal.dart';
-
-/// home page allows user to select picture from camera or gallery
-/// home.dart then runs the image through the tflite
-/// model and sends data to results_screen.dart.
-/// User can also choose to view previous ML results
+import 'package:animal_classification/nav_bar.dart';
 
 class BodyStart extends StatefulWidget {
   @override
@@ -16,7 +12,6 @@ class BodyStart extends StatefulWidget {
 
 class _BodyStartState extends State<BodyStart> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  late File _image;
   final picker = ImagePicker(); //allows us to pick image from gallery or camera
 
   //disposes and clears memory
@@ -28,6 +23,7 @@ class _BodyStartState extends State<BodyStart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -40,17 +36,6 @@ class _BodyStartState extends State<BodyStart> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton.extended( //signout button
-      //   label: Text(
-      //       "sign out",
-      //       style: TextStyle(
-      //         fontSize: 10,
-      //       )
-      //   ),
-      //   onPressed: signOut,
-      //   icon: Icon(Icons.logout),
-      //   backgroundColor: Colors.green,
-      // ),
       body: Container(
         color: Colors.black.withOpacity(0.9),
         padding: EdgeInsets.symmetric(horizontal: 35, vertical: 50),

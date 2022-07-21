@@ -8,6 +8,7 @@ import 'package:animal_classification/previous_classifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animal_classification/baseline_model.dart';
 import 'package:animal_classification/BodyParts/body_start.dart';
+import 'package:animal_classification/nav_bar.dart';
 
 /// home page allows user to select picture from camera or gallery
 /// home.dart then runs the image through the tflite
@@ -20,7 +21,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
   late File _image;
   final picker = ImagePicker(); //allows us to pick image from gallery or camera
 
@@ -82,13 +82,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-  //sign out function
-  signOut() async {
-    await auth.signOut();
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
-  }
-
   //disposes and clears memory
   @override
   void dispose() {
@@ -99,30 +92,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(
-          'BirdbrAIn',
+          'birdbrAIn',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
             fontSize: 23,
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended( //signout button
-        label: Text(
-            "sign out",
-            style: TextStyle(
-            fontSize: 10,
-              )
-            ),
-        onPressed: () {
-          signOut();
-        },
-        icon: Icon(Icons.logout),
-        backgroundColor: Colors.green,
       ),
       body: Container(
         color: Colors.black.withOpacity(0.9),
@@ -163,7 +144,8 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Text(
-                          'Baseline Model',
+                          'Baseline',
+                          textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),

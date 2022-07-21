@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animal_classification/home.dart';
+import 'package:animal_classification/nav_bar.dart';
 
 
 class ConfirmImages extends StatefulWidget {
@@ -112,6 +113,7 @@ class ConfirmImagesState extends State<ConfirmImages> {
   Widget build(BuildContext context) {
     //getInfoFromDB();
     return Scaffold(
+        drawer: NavBar(),
         appBar: AppBar(
             backgroundColor: Colors.black,
             title: Text(

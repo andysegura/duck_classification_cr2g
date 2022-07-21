@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:animal_classification/previous_result.dart';
+import 'package:animal_classification/nav_bar.dart';
 
 ///Previous classifications lists all previous classifications
 ///the user chose to save.
@@ -97,6 +98,7 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
   Widget build(BuildContext context) {
     //getInfoFromDB();
     return Scaffold(
+        drawer: NavBar(),
         appBar: AppBar(
             backgroundColor: Colors.black,
             title: Text(

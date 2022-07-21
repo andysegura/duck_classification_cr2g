@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animal_classification/nav_bar.dart';
 
 ///The result screen displays the ML results.
 ///tflite model is ran in home.dart and sent to this page
@@ -76,6 +77,7 @@ class ResultsScreenState extends State<ResultsScreen> {
       duck = 'Platyrhynchos (Mallard Duck)';
     }
     return Scaffold(
+        drawer: NavBar(),
         appBar: AppBar(
             backgroundColor: Colors.black,
             title: Text(
@@ -98,7 +100,8 @@ class ResultsScreenState extends State<ResultsScreen> {
                 ),
                 child: Column(
                     children:
-                      [Text(duck,
+                      [
+                        Text(duck,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,

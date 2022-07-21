@@ -1,14 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:animal_classification/previous_classifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animal_classification/BodyParts/body_dorsal_result.dart';
-
-/// home page allows user to select picture from camera or gallery
-/// home.dart then runs the image through the tflite
-/// model and sends data to results_screen.dart.
-/// User can also choose to view previous ML results
+import  'package:animal_classification/nav_bar.dart';
 
 class BodyDorsal extends StatefulWidget {
   Map _results;
@@ -55,6 +50,7 @@ class _BodyDorsalState extends State<BodyDorsal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.black,
         centerTitle: true,
@@ -124,31 +120,6 @@ class _BodyDorsalState extends State<BodyDorsal> {
                           'Choose from Gallery',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    GestureDetector( // Previous Results Button
-                      onTap: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    PreviousClassifications()));
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        alignment: Alignment.center,
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Text(
-                          'Start Over',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
