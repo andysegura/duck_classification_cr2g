@@ -81,11 +81,17 @@ class _BodyVentralState extends State<BodyVentral> {
                 child: Column(
                   children: [
                     Text(
-                        'Body Ventral:',
+                        'Stomach side of the body:',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset('assets/Body_Ventral.png',
+                      height: 200,
+                      width: 200,
                     ),
                     SizedBox(height: 20),
                     GestureDetector( // take a photo button

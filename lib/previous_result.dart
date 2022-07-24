@@ -100,7 +100,7 @@ class PreviousResultState extends State<PreviousResult> {
                         mlPredicted,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           color: Colors.white,
                         ),
                       ),

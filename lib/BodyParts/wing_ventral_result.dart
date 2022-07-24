@@ -31,8 +31,8 @@ class _WingVentralResultState extends State<WingVentralResult> {
   //disposes and clears memory
   @override
   void dispose() {
-    super.dispose();
     Tflite.close();
+    super.dispose();
   }
 
   loadModel() async {
@@ -92,14 +92,17 @@ class _WingVentralResultState extends State<WingVentralResult> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Wing Ventral:',
+              Text('Stomach side of the wing:',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   )
               ),
               SizedBox(height:20),
-              Image.file(_image),
+              Image.file(_image,
+                  width: 300,
+                  height: 300),
               SizedBox(height: 30),
               Row(
                 children: [
@@ -122,7 +125,7 @@ class _WingVentralResultState extends State<WingVentralResult> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 40),
+                  SizedBox(width: 20),
                   GestureDetector(
                     onTap: () async {
                       print(_results.toString());

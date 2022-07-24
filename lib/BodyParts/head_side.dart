@@ -89,11 +89,17 @@ class _HeadSideState extends State<HeadSide> {
                 child: Column(
                   children: [
                     Text(
-                        'Head Side:',
+                        'Side of the head:',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset('assets/Head_Side.png',
+                      height: 200,
+                      width: 200,
                     ),
                     SizedBox(height: 20),
                     GestureDetector( // take a photo button

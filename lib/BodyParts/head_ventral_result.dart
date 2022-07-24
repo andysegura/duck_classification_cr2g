@@ -31,8 +31,8 @@ class _HeadVentralResultState extends State<HeadVentralResult> {
   //disposes and clears memory
   @override
   void dispose() {
-    super.dispose();
     Tflite.close();
+    super.dispose();
   }
 
   loadModel() async {
@@ -92,14 +92,18 @@ class _HeadVentralResultState extends State<HeadVentralResult> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Head Ventral:',
+              Text(
+                  'Stomach side of the head:',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   )
               ),
               SizedBox(height:20),
-              Image.file(_image),
+              Image.file(_image,
+                  width: 300,
+                  height: 300),
               SizedBox(height: 30),
               Row(
                 children: [
@@ -122,7 +126,7 @@ class _HeadVentralResultState extends State<HeadVentralResult> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 40),
+                  SizedBox(width: 20),
                   GestureDetector(
                     onTap: () async {
                       await classifyImage(_image);

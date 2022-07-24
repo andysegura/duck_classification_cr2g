@@ -30,8 +30,8 @@ class _HeadDorsalResultState extends State<HeadDorsalResult> {
   //disposes and clears memory
   @override
   void dispose() {
-    super.dispose();
     Tflite.close();
+    super.dispose();
   }
 
   loadModel() async {
@@ -88,14 +88,17 @@ class _HeadDorsalResultState extends State<HeadDorsalResult> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Head Dorsal:',
+              Text('Back side of the head:',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   )
               ),
               SizedBox(height:20),
-              Image.file(_image),
+              Image.file(_image,
+              width: 300,
+              height: 300),
               SizedBox(height: 30),
               Row(
                 children: [
@@ -118,7 +121,7 @@ class _HeadDorsalResultState extends State<HeadDorsalResult> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 40),
+                  SizedBox(width: 20),
                   GestureDetector(
                     onTap: () async {
                       await classifyImage(_image);
@@ -136,7 +139,7 @@ class _HeadDorsalResultState extends State<HeadDorsalResult> {
                       ),
                       child: Center(
                         child: Text(
-                          "Next photo",
+                          "Accept",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

@@ -131,13 +131,19 @@ class _HeadDorsalState extends State<HeadDorsal> {
                 child: Column(
                   children: [
                     Text(
-                        'Head Dorsal: ',
+                        'Back side of the head:',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )
                     ),
                     SizedBox(height: 20),
+                    Image.asset('assets/Head_Dorsal.png',
+                    height: 200,
+                    width: 200,
+                    ),
+                    SizedBox(height:20),
                     GestureDetector( // take a photo button
                       onTap: pickImage,
                       child: Container(

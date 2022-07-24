@@ -1,3 +1,4 @@
+import 'package:animal_classification/BodyParts/body_result.dart';
 import 'package:flutter/material.dart';
 import 'package:animal_classification/home.dart';
 import 'package:animal_classification/nav_bar.dart';
@@ -17,7 +18,11 @@ class ConfirmImagesState extends State<ConfirmImages> {
   ConfirmImagesState(this._results);
   var body_parts = ['head_dorsal', 'head_side', 'head_ventral',
   'body_dorsal', 'body_ventral', 'wing_dorsal', 'wing_ventral'];
-
+  Map translations = {'head_dorsal': 'back side of the head',
+  'head_side': 'side of the head', 'head_ventral':'stomach side of the head',
+  'body_dorsal':'back side of the body', 'body_ventral':
+    'stomach side of the body', 'wing_dorsal': 'back side of the body',
+  'wing_ventral': 'stomach side of the wing'};
 
   Widget buildImageCard(int index) =>
       Card(
@@ -29,9 +34,9 @@ class ConfirmImagesState extends State<ConfirmImages> {
           margin: EdgeInsets.all(8),
           child: Column(
             children:[ index != 7 ?
-              Text(body_parts[index],
+              Text(translations[body_parts[index]],
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 10,
                 )
               ) : SizedBox(height:10),
               ClipRRect(
@@ -54,7 +59,7 @@ class ConfirmImagesState extends State<ConfirmImages> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      Home())
+                                      BodyResultsScreen(_results))
                           );
                         },
                         child: Container(
@@ -113,6 +118,7 @@ class ConfirmImagesState extends State<ConfirmImages> {
   Widget build(BuildContext context) {
     //getInfoFromDB();
     return Scaffold(
+        backgroundColor: Colors.black,
         drawer: NavBar(),
         appBar: AppBar(
             backgroundColor: Colors.black,

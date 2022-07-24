@@ -1,6 +1,6 @@
 import 'package:animal_classification/BodyParts/body_start.dart';
 import 'package:animal_classification/baseline_model.dart';
-import 'package:animal_classification/previous_classifications.dart';
+import 'package:animal_classification/previous_results_fork.dart';
 import 'package:flutter/material.dart';
 import 'package:animal_classification/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,7 +69,7 @@ class NavBar extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            PreviousClassifications()));
+                            PreviousResultsFork()));
               }
           ),
           ListTile(

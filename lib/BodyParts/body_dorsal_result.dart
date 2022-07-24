@@ -31,8 +31,8 @@ class _BodyDorsalResultState extends State<BodyDorsalResult> {
   //disposes and clears memory
   @override
   void dispose() {
-    super.dispose();
     Tflite.close();
+    super.dispose();
   }
 
   loadModel() async {
@@ -91,14 +91,18 @@ class _BodyDorsalResultState extends State<BodyDorsalResult> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Body Dorsal:',
+              Text('Back side of the body:',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   )
               ),
               SizedBox(height:20),
-              Image.file(_image),
+              Image.file(_image,
+              width: 300,
+              height: 300
+              ),
               SizedBox(height: 30),
               Row(
                 children: [
@@ -121,7 +125,7 @@ class _BodyDorsalResultState extends State<BodyDorsalResult> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 40),
+                  SizedBox(width: 20),
                   GestureDetector(
                     onTap: () async {
                       await classifyImage(_image);

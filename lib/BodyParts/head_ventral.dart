@@ -81,11 +81,17 @@ class _HeadVentralState extends State<HeadVentral> {
                 child: Column(
                   children: [
                     Text(
-                        'Head Ventral:',
+                        'Stomach side of the head:',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )
+                    ),
+                    SizedBox(height: 20),
+                    Image.asset('assets/Head_Ventral.png',
+                      height: 200,
+                      width: 200,
                     ),
                     SizedBox(height: 20),
                     GestureDetector( // take a photo button

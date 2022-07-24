@@ -1,31 +1,28 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:animal_classification/nav_bar.dart';
+import 'dart:io';
 
 ///The result screen displays the ML results.
-///tflite model is ran in baseline_model.dart and sent to this page
+///tflite model is ran in BodyParts/confirm_images.dart and sent to this page
 
-class ResultsScreen extends StatefulWidget {
-  File _image;
-  String duckName;
-  String confidence;
-  ResultsScreen(this._image, this.duckName, this.confidence);
+class BodyResultsScreen extends StatefulWidget {
+  Map _results;
+  BodyResultsScreen(this._results);
   @override
-  ResultsScreenState createState() => ResultsScreenState(_image, duckName, confidence);
+  BodyResultsScreenState createState() => BodyResultsScreenState(_results);
 }
 
-class ResultsScreenState extends State<ResultsScreen> {
+class BodyResultsScreenState extends State<BodyResultsScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
-  File _image;
-  String confidence;
-  String? userPredicted;
+  CollectionReference bodyPredictionsDB = FirebaseFirestore.instance.collection('bodyPredictionsDB');
+  Map _results;
   var duckName;
+  String? userPredicted;
 
-  ResultsScreenState(this._image, this.duckName, this.confidence);
+  BodyResultsScreenState(this._results);
 
   // dropdown menu so user can choose their own prediction
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
@@ -47,34 +44,50 @@ class ResultsScreenState extends State<ResultsScreen> {
     final uid = user?.uid;
     final email = user?.email;
     final time = DateTime.now();
+    print('----*****___---------______________------D');
+    print(_results.toString());
 
-    predictionsDB.add({
-      'mlPredicted': duckName,
-      'confidence': confidence,
-      'userPredicted': userPredicted,
-      'image': base64Encode(_image.readAsBytesSync()),
+
+    bodyPredictionsDB.add(
+        {
       'date': '${time.month.toString()}/${time.day.toString()}/${time.year.toString()} ${time.hour.toString()}:${time.minute.toString()}',
       'uid' : uid,
       'email': email,
       'showOnFeed': true,
-    }
+
+      'head_dorsal_image': base64Encode(_results['head_dorsal'][0].readAsBytesSync()),
+      'head_dorsal_label': _results['head_dorsal'][1],
+      'head_dorsal_confidence': _results['head_dorsal'][2],
+      //'head_side_image': base64Encode(File(_results['head_side'][0].path).readAsBytesSync()),
+      'head_side_label': _results['head_side'][1],
+      'head_side_confidence': _results['head_side'][2],
+      //'head_ventral_image': base64Encode(File(_results['head_ventral'][0].path).readAsBytesSync()),
+      'head_ventral_label': _results['head_ventral'][1],
+      'head_ventral_confidence': _results['head_ventral'][2],
+      //'body_dorsal_image': base64Encode(File(_results['body_dorsal'][0].path).readAsBytesSync()),
+      'body_dorsal_label': _results['body_dorsal'][1],
+      'body_dorsal_confidence': _results['body_dorsal'][2],
+      //'body_ventral_image': base64Encode(File(_results['body_ventral'][0].path).readAsBytesSync()),
+      'body_ventral_label': _results['body_ventral'][1],
+      'body_ventral_confidence': _results['body_ventral'][2],
+      //'wing_dorsal_image': base64Encode(File(_results['wing_dorsal'][0].path).readAsBytesSync()),
+      'wing_dorsal_label': _results['wing_dorsal'][1],
+      'wing_dorsal_confidence': _results['wing_dorsal'][2],
+      //'wing_ventral_image': base64Encode(File(_results['wing_ventral'][0].path).readAsBytesSync()),
+      'wing_ventral_label': _results['wing_ventral'][1],
+      'wing_ventral_confidence': _results['wing_ventral'][2],
+      }
     );
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    String? userPredicted;
     final predictionOptions = ['Unknown',
       'Diazi (Mexican Duck)',
       'Platyrhynchos (Mallard Duck)',
       'Other'];
-    var duck;
-    if (duckName == '0') {
-      duck = 'Diazi (Mexican Duck)';
-    }
-    else {
-      duck = 'Platyrhynchos (Mallard Duck)';
-    }
+    var duck = 'diazi';
     return Scaffold(
         drawer: NavBar(),
         appBar: AppBar(
@@ -99,8 +112,8 @@ class ResultsScreenState extends State<ResultsScreen> {
                 ),
                 child: Column(
                     children:
-                      [
-                        Text(duck,
+                    [
+                      Text(duck,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -109,14 +122,14 @@ class ResultsScreenState extends State<ResultsScreen> {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        confidence + "% confident",
+                        "% confident",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 10),
-                      Expanded(child: Image.file(_image)),
+                      Expanded(child: Image.file(_results['head_dorsal'][0])),
                       SizedBox(height: 10),
                       Text(
                           'Your Prediction:',

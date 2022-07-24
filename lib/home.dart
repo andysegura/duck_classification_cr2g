@@ -1,11 +1,9 @@
 import 'dart:io';
-import 'package:animal_classification/login_page.dart';
 import 'package:animal_classification/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:animal_classification/previous_classifications.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:animal_classification/previous_results_fork.dart';
 import 'package:animal_classification/baseline_model.dart';
 import 'package:animal_classification/BodyParts/body_start.dart';
 import 'package:animal_classification/nav_bar.dart';
@@ -123,7 +121,8 @@ class _HomeState extends State<Home> {
                   children: [
                     Image.asset('assets/birdbrAIn logo.png',
                     height: 200,
-                    width: 200,),
+                    width: 200,
+                    ),
                     SizedBox(height: 40),
                     GestureDetector( // take a photo button
                       onTap: () async {
@@ -182,7 +181,7 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    PreviousClassifications()));
+                                    PreviousResultsFork()));
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width - 200,

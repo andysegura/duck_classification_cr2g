@@ -8,20 +8,20 @@ import 'package:animal_classification/nav_bar.dart';
 ///Previous classifications lists all previous classifications
 ///the user chose to save.
 
-class PreviousClassifications extends StatefulWidget {
-  PreviousClassifications();
+class PreviousBodyClassifications extends StatefulWidget {
+  PreviousBodyClassifications();
 
   @override
-  PreviousClassificationsState createState() => PreviousClassificationsState();
+  PreviousBodyClassificationsState createState() => PreviousBodyClassificationsState();
 }
 
-class PreviousClassificationsState extends State<PreviousClassifications> {
+class PreviousBodyClassificationsState extends State<PreviousBodyClassifications> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference predictionsDB = FirebaseFirestore.instance.collection('predictionsDB');
   var docIDs = <Map>[]; //stores all previous results that will be shown on feed
   var img;
 
-    Widget buildImageCard(int index) =>
+  Widget buildImageCard(int index) =>
       Card(
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
@@ -32,22 +32,22 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
           child: ClipRRect(
               borderRadius: BorderRadius.circular(0),
               child: GestureDetector(onTap: () async {
-                                    Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                      PreviousResult(
-                                          docIDs[index]['image'],
-                                          docIDs[index]['mlPredicted'],
-                                          docIDs[index]['confidence'],
-                                          docIDs[index]['userPredicted'],
-                                          docIDs[index]['uid'],
-                                          docIDs[index]['documentID'],
-                                          docIDs[index]['date']
-                                      )
-                                    )
-                                  );
-                                },
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            PreviousResult(
+                                docIDs[index]['image'],
+                                docIDs[index]['mlPredicted'],
+                                docIDs[index]['confidence'],
+                                docIDs[index]['userPredicted'],
+                                docIDs[index]['uid'],
+                                docIDs[index]['documentID'],
+                                docIDs[index]['date']
+                            )
+                    )
+                );
+              },
                 child: Image(
                     image: Image
                         .memory(base64Decode(docIDs[index]['image']))
@@ -116,15 +116,15 @@ class PreviousClassificationsState extends State<PreviousClassifications> {
                 builder: (context, snapshot) {
                   return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 5,
-                                    crossAxisSpacing: 5,
-                                  ),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 5,
+                        crossAxisSpacing: 5,
+                      ),
                       itemCount: docIDs.length,
                       itemBuilder: (context, index) => buildImageCard(index));
-                 }
-             )
-         )
+                }
+            )
+        )
     );
   }
 }

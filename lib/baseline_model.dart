@@ -91,8 +91,8 @@ class _BaselineModelState extends State<BaselineModel> {
   //disposes and clears memory
   @override
   void dispose() {
-    super.dispose();
     Tflite.close();
+    super.dispose();
   }
 
   @override
@@ -111,17 +111,6 @@ class _BaselineModelState extends State<BaselineModel> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton.extended( //signout button
-      //   label: Text(
-      //       "sign out",
-      //       style: TextStyle(
-      //         fontSize: 10,
-      //       )
-      //   ),
-      //   onPressed: signOut,
-      //   icon: Icon(Icons.logout),
-      //   backgroundColor: Colors.green,
-      // ),
       body: Container(
         color: Colors.black.withOpacity(0.9),
         padding: EdgeInsets.symmetric(horizontal: 35, vertical: 50),
